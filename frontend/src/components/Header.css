@@ -1,0 +1,8 @@
+.header-container {
+  width: 100vh;
+  position: absolute;
+}
+
+.shopper-header {
+  background-color: #1e2044;
+}

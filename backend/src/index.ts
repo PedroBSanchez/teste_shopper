@@ -16,6 +16,7 @@ const main = async () => {
   app.use("/api/products", ProductControllerRoutes);
 
   ////////////
+  console.log(process.env.MYSQL_PASSWORD);
 
   connectToDataBase();
 

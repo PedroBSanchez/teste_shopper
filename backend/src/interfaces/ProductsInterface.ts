@@ -5,4 +5,9 @@ interface InterfaceProduct {
   sales_price: number;
 }
 
-export { InterfaceProduct };
+interface InterfaceProductUpdateRequest {
+  code: number;
+  sales_price: number;
+}
+
+export { InterfaceProduct, InterfaceProductUpdateRequest };

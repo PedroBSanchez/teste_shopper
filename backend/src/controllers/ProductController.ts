@@ -1,8 +1,11 @@
-import { Router } from "express";
+import { NextFunction, Router } from "express";
 import { Request, Response } from "express";
 import { ProductService } from "../services/ProductService";
 import Product from "../models/Product";
-import { InterfaceProduct } from "../interfaces/ProductsInterface";
+import {
+  InterfaceProduct,
+  InterfaceProductUpdateRequest,
+} from "../interfaces/ProductsInterface";
 import { ProductValidation } from "../validations/ProductValidations";
 
 const router = Router();
@@ -15,6 +18,7 @@ class ProductController {
   constructor(router: Router) {
     this.router = router;
     this.productService = new ProductService();
+    this.productValidation = new ProductValidation();
   }
 
   getRouter(): Router {
@@ -22,38 +26,69 @@ class ProductController {
   }
 
   useRoutes(): void {
-    this.router.post("/validar", async (req: Request, res: Response) => {
+    this.router.post("/validate", async (req: Request, res: Response) => {
       try {
-        const products: Array<InterfaceProduct> = req.body;
+        const products: Array<InterfaceProductUpdateRequest> =
+          req.body.products;
 
         if (products.length <= 0) {
           return res.status(400).send({ error: "Lista de produtos vazia" });
         }
 
         for (let index = 0; index < products.length; index++) {
-          const validation = this.productValidation.validateProduct(
+          const validation: any = this.productValidation.validateProduct(
             products[index]
           );
 
           if (validation.error) {
             return res.status(400).send({
-              error: validation.error.message[0],
+              error: validation.error.message,
               product: products[index],
             });
           }
         }
 
-        const validateProducts = await this.productService.validateProducts(
+        const validateProducts: any =
+          await this.productService.validateProducts(products);
+
+        return res.status(200).send(validateProducts);
+      } catch (error) {
+        console.log(error);
+        throw error;
+      }
+    });
+
+    this.router.put("/update", async (req: Request, res: Response) => {
+      try {
+        const products: Array<InterfaceProductUpdateRequest> =
+          req.body.products;
+
+        if (products.length <= 0) {
+          return res.status(400).send({ error: "Lista de produtos vazia" });
+        }
+
+        for (let index = 0; index < products.length; index++) {
+          const validation: any = this.productValidation.validateProduct(
+            products[index]
+          );
+
+          if (validation.error) {
+            return res.status(400).send({
+              error: validation.error.message,
+              product: products[index],
+            });
+          }
+        }
+
+        const updateProducts = await this.productService.updateProducts(
           products
         );
 
-        if (validateProducts.error) {
-          return res.status(400).send("ok");
+        if (updateProducts.error) {
+          return res.status(400).send(updateProducts);
         }
 
-        return res
-          .status(200)
-          .send({ success: "Produtos Validados corretamente" });
+        return res.status(200).send(updateProducts);
       } catch (error) {
         console.log(error);
         throw error;

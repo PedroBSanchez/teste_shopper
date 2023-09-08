@@ -7,6 +7,8 @@ import { connectToDataBase } from "./database/MySql";
 const main = async () => {
   config();
 
+  console.log("----------");
+  console.log(process.env.MYSQL_DB);
   const app = express();
   app.use(cors());
   app.use(express.json());
@@ -16,8 +18,6 @@ const main = async () => {
   app.use("/api/products", ProductControllerRoutes);
 
   ////////////
-  console.log(process.env.MYSQL_PASSWORD);
-
   connectToDataBase();
 
   const port = process.env.PORT || 8080;

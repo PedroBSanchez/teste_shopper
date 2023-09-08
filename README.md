@@ -45,3 +45,7 @@ MYSQL_HOST=127.0.0.1
 
 - Ao iniciar o projeto os dados serão resetados para o estado inicial como no arquivo database.sql
 
+# Preview 
+![Screenshot_1](https://github.com/PedroBSanchez/teste_shopper/assets/68929967/40d6da29-b38b-473b-a4fa-1f14ed839b08)
+
+

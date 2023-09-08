@@ -41,3 +41,7 @@ MYSQL_HOST=127.0.0.1
 - Acessar via terminal pasta frontend e executar comandos "npm install" e "npm start"
 - Observação: É necessário que tenha uma instância MySQL rodando em sua máquina ou em algum servidor externo para que a aplicação possa se conectar
 
+# Observação
+
+- Ao iniciar o projeto os dados serão resetados para o estado inicial como no arquivo database.sql
+
